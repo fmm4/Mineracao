@@ -2,7 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry exported="true" kind="lib" path="C:/UFPE/2016.2/IF769-MineracaoDaWeb/Projeto/lucene-6.2.0/core/lucene-core-6.2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/UFPE/2016.2/IF769-MineracaoDaWeb/Projeto/SWT/swt.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/UFPE/2016.2/IF769-MineracaoDaWeb/Projeto/Mineracao/SWT/swt.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/UFPE/2016.2/IF769-MineracaoDaWeb/Projeto/Mineracao/lucene-4.4.0/core/lucene-core-4.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/UFPE/2016.2/IF769-MineracaoDaWeb/Projeto/Mineracao/lucene-4.4.0/analysis/common/lucene-analyzers-common-4.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/UFPE/2016.2/IF769-MineracaoDaWeb/Projeto/Mineracao/lucene-4.4.0/queries/lucene-queries-4.4.0.jar"/>
+	<classpathentry kind="lib" path="C:/UFPE/2016.2/IF769-MineracaoDaWeb/Projeto/Mineracao/lucene-4.4.0/queryparser/lucene-queryparser-4.4.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
