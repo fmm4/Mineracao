@@ -77,7 +77,7 @@ public class Searcher {
 		int repeat = 0;
 		boolean raw = false;
 		String queryString = query;
-		int hitsPerPage = 10;
+		int hitsPerPage = 200;
 
 		IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(index)));
 		IndexSearcher searcher = new IndexSearcher(reader);
@@ -165,6 +165,8 @@ public class Searcher {
 
 			end = Math.min(hits.length, start + hitsPerPage);
 
+				//troquei end por numTotalHits
+			//LAÇO PRINCIPAL
 			for (int i = start; i < end; i++) {
 				if (raw) { // output raw format
 					System.out.println("doc=" + hits[i].doc + " score=" + hits[i].score);
@@ -175,6 +177,11 @@ public class Searcher {
 				String path = doc.get("path");
 				if (path != null) {
 					System.out.println((i + 1) + ". " + path);
+					//System.out.println(path.length());
+					//SE 20, 2 NUMEROS, SE 21 3 NUMEROS
+					//System.out.println(path.substring(13, 17));
+					
+					//CONSULTA 2: 17 RELEVANTES ESPORTES
 					String title = doc.get("title");
 					if (title != null) {
 						System.out.println("   Title: " + doc.get("title"));
