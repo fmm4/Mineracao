@@ -73,7 +73,7 @@ public class Searcher {
     int repeat = 0;
     boolean raw = false;
     String queryString = query;
-    int hitsPerPage = 10;
+    int hitsPerPage = 30;
     
     
 
