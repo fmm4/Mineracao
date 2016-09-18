@@ -19,12 +19,16 @@ package back;
 
 import org.tartarus.snowball.ext.EnglishStemmer;
 
+import com.opencsv.CSVReader;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -46,9 +50,22 @@ public class Searcher {
 
 	private Searcher() {
 	}
+	
+	
+//	  RETORNA LIST <STRING []>	DO CSV
+	
+//	  CSVReader reader = new CSVReader(new FileReader("yourfile.csv"));
+//	  List myEntries = reader.readAll();
+    
+
+    
+    
+	
 
 	/** Simple command-line based search demo. */
 	public static void search(String query, boolean stopword, boolean stemming) throws Exception {
+		
+
 
 		String index = null;
 		Analyzer analyzer = null;
@@ -181,7 +198,9 @@ public class Searcher {
 					//SE 20, 2 NUMEROS, SE 21 3 NUMEROS
 					//System.out.println(path.substring(13, 17));
 					
-					//CONSULTA 2: 17 RELEVANTES ESPORTES
+					//CONSULTA 1: 29 RELEVANTES
+					//CONSULTA 2: 17 RELEVANTES
+					//CONSULTA 3: 18 RELEVANTES
 					String title = doc.get("title");
 					if (title != null) {
 						System.out.println("   Title: " + doc.get("title"));
