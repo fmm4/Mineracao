@@ -229,7 +229,6 @@ public class Searcher {
 				end = Math.min(numTotalHits, start + hitsPerPage);
 			}
 		}
-<<<<<<< HEAD
     String field = "contents";
     String queries = null;
     int repeat = 0;
