@@ -50,21 +50,11 @@ public class Searcher {
 
 	private Searcher() {
 	}
-	
-	
-//	  RETORNA LIST <STRING []>	DO CSV
-	
-//	  CSVReader reader = new CSVReader(new FileReader("yourfile.csv"));
-//	  List myEntries = reader.readAll();
-    
 
-    
-    
-	
 
 	/** Simple command-line based search demo. */
-	public static void search(String query, boolean stopword, boolean stemming) throws Exception {
-		
+	public static void search(String query, boolean stopword, boolean stemming,int consulta) throws Exception {
+
 
 
 		String index = null;
@@ -95,6 +85,12 @@ public class Searcher {
 		boolean raw = false;
 		String queryString = query;
 		int hitsPerPage = 200;
+
+		CSVReader CSVreader = new CSVReader(new FileReader(".\\matriz.csv"));
+		List<String[]> myEntries = CSVreader.readAll();
+
+
+
 
 		IndexReader reader = DirectoryReader.open(FSDirectory.open(new File(index)));
 		IndexSearcher searcher = new IndexSearcher(reader);
@@ -134,7 +130,7 @@ public class Searcher {
 				System.out.println("Time: " + (end.getTime() - start.getTime()) + "ms");
 			}
 
-			doPagingSearch(in, searcher, query1, hitsPerPage, raw, queries == null && queryString == null);
+			doPagingSearch(in, searcher, query1, hitsPerPage, raw, queries == null && queryString == null,myEntries, consulta);
 
 			if (queryString != null) {
 				break;
@@ -155,13 +151,30 @@ public class Searcher {
 	 * 
 	 */
 	public static void doPagingSearch(BufferedReader in, IndexSearcher searcher, Query query, int hitsPerPage,
-			boolean raw, boolean interactive) throws IOException {
+			boolean raw, boolean interactive, List<String[]> resu, int consulta) throws IOException {
+
+		//Relevante para Mineracao
+		int[] relevantes = new int[3];
+		relevantes[consulta-1] = 0;
+		for(int i = 0; i < 200; i++){
+			String[] lista = resu.get(consulta-1);
+			if(Integer.parseInt(lista[i])==1)
+			{
+				relevantes[consulta-1]++;
+			}
+		}
+
+		int recuperados;
+		int relevantesRecuperados = 0;
+
+
 
 		// Collect enough docs to show 5 pages
 		TopDocs results = searcher.search(query, 5 * hitsPerPage);
 		ScoreDoc[] hits = results.scoreDocs;
 
 		int numTotalHits = results.totalHits;
+		recuperados = numTotalHits;
 		System.out.println(numTotalHits + " total matching documents");
 
 		int start = 0;
@@ -182,7 +195,7 @@ public class Searcher {
 
 			end = Math.min(hits.length, start + hitsPerPage);
 
-				//troquei end por numTotalHits
+			//troquei end por numTotalHits
 			//LAÇO PRINCIPAL
 			for (int i = start; i < end; i++) {
 				if (raw) { // output raw format
@@ -193,24 +206,47 @@ public class Searcher {
 				Document doc = searcher.doc(hits[i].doc);
 				String path = doc.get("path");
 				if (path != null) {
-					System.out.println((i + 1) + ". " + path);
-					//System.out.println(path.length());
-					//SE 20, 2 NUMEROS, SE 21 3 NUMEROS
-					//System.out.println(path.substring(13, 17));
-					
-					//CONSULTA 1: 29 RELEVANTES
-					//CONSULTA 2: 17 RELEVANTES
-					//CONSULTA 3: 18 RELEVANTES
+					System.out.print((i + 1) + ". " + path);
+
 					String title = doc.get("title");
 					if (title != null) {
 						System.out.println("   Title: " + doc.get("title"));
 					}
+					
+					int docEncontrado = 0;
+					if(path!=null){
+						String docNumberString = path.substring(path.indexOf('#')+1,path.indexOf(".txt"));
+						docEncontrado = Integer.parseInt(docNumberString);
+					}
+
+					if(consulta!=0){
+						String[] lista = resu.get(consulta-1);
+						if(Integer.parseInt(lista[docEncontrado-1])==1)
+						{
+							System.out.print(" [RELEVANT]");
+							relevantesRecuperados++;
+						}
+					}
+					System.out.println();
 				} else {
 					System.out.println((i + 1) + ". " + "No path for this document");
 				}
 
+
+				
+
 			}
 
+			//mais matematica para mineracao
+			if(consulta!=0)
+			{
+				double precision = ((double) relevantesRecuperados)/((double) recuperados);
+				double recall = ((double) relevantesRecuperados)/((double) relevantes[consulta-1]);
+				double fmeasure = 2*(precision*recall)/(precision+recall);
+				System.out.println("Using information of Relevancy Matrix Row "+consulta);
+				System.out.println("Precision: "+precision+"	| Recall: "+recall);
+				System.out.println("F-Measure: "+fmeasure);
+			}
 			if (!interactive || end == 0) {
 				break;
 			}

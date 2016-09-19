@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="C:/UFPE/2016.2/IF769-MineracaoDaWeb/Projeto/Mineracao/lucene-4.4.0/analysis/common/lucene-analyzers-common-4.4.0.jar"/>
 	<classpathentry kind="lib" path="C:/UFPE/2016.2/IF769-MineracaoDaWeb/Projeto/Mineracao/lucene-4.4.0/queries/lucene-queries-4.4.0.jar"/>
 	<classpathentry kind="lib" path="C:/UFPE/2016.2/IF769-MineracaoDaWeb/Projeto/Mineracao/lucene-4.4.0/queryparser/lucene-queryparser-4.4.0.jar"/>
+	<classpathentry kind="lib" path="opencsv-3.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

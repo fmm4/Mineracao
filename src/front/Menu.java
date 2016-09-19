@@ -12,12 +12,15 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Text;
 
 import back.Searcher;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 
 public class Menu {
 
 	protected Shell shell;
 	private Text text;
-
+	private Text text_1;
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -57,6 +60,7 @@ public class Menu {
 		
 		text = new Text(shell, SWT.BORDER);
 		text.setBounds(10, 10, 446, 26);
+		int consulta = 0;
 		
 		
 		Button btnSearch = new Button(shell, SWT.NONE);
@@ -73,12 +77,25 @@ public class Menu {
 		btnStemming.setBounds(10, 68, 111, 20);
 		btnStemming.setText("Stemming");
 		
+		text_1 = new Text(shell, SWT.BORDER);
+		text_1.setBounds(250, 39, 27, 26);
+		
+		Label lblConsultaNr = new Label(shell, SWT.NONE);
+		lblConsultaNr.setBounds(160, 42, 84, 20);
+		lblConsultaNr.setText("Consulta Nr:");
+		
 		btnSearch.addSelectionListener(new SelectionListener(){
 			
 			public void widgetSelected(SelectionEvent event){
 				String queryString = text.getText();
+				int consulta;
+				if(text_1.getText()==null || text_1.getText().equals("")){
+					consulta = 0;
+				}else{
+					consulta = Integer.parseInt(text_1.getText());
+				}
 				try {
-					Searcher.search(queryString, btnNoStopwords.getSelection(), btnStemming.getSelection());
+					Searcher.search(queryString, btnNoStopwords.getSelection(), btnStemming.getSelection(),consulta);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -94,6 +111,4 @@ public class Menu {
 
 
 	}
-	
-	
 }
